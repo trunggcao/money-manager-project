@@ -13,11 +13,18 @@ import java.util.UUID;
 public class ProfileService {
 
     private final ProfileRepository  profileRepository;
+    private final EmailService emailService;
 
     public ProfileDTO registerProfile(ProfileDTO profileDTO){
         ProfileEntity newProfile = toEntity(profileDTO);
         newProfile.setActivationToken(UUID.randomUUID().toString());
         newProfile = profileRepository.save(newProfile);
+
+        //send activation email
+        String activationLink = "http://localhost:5454/api/v1.0/activate?token=" + newProfile.getActivationToken();
+        String subject = "Xác nhận tài khoản MoneyManager của bạn";
+        String body = "Nhấn vào đường link bên dưới để tiến hành xác nhận tài khoản của bạn " + activationLink;
+        emailService.sendEmail(newProfile.getEmail(),subject,body);
 
         return toDTO(newProfile);
     }
