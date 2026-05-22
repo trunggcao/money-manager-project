@@ -17,7 +17,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-    @Value("${SECRETKEY}")
+    @Value("${jwt.secret}")
     private String secretkey;
 
     public String generateAccessToken(AuthDTO authDTO){

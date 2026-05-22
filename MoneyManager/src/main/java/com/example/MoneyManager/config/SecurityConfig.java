@@ -27,17 +27,6 @@ public class SecurityConfig {
     private final CustomerUserDetailsService customerUserDetailsService;
     private final JwtDecoderConfiguration jwtDecoderConfiguration;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception {
-//        httpSecurity.cors(Customizer.withDefaults())
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth -> auth.requestMatchers("/status","/health","/login","/activate","/register").permitAll()
-//                        .anyRequest().authenticated())
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//
-//        return httpSecurity.build();
-//
-//    }
         @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception {
         httpSecurity

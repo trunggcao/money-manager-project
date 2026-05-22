@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class JwtDecoderConfiguration implements JwtDecoder {
 
-    @Value("${SECRETKEY}")
+    @Value("${jwt.secret}")
     private String secretkey;
 
     private final JwtService jwtService;
