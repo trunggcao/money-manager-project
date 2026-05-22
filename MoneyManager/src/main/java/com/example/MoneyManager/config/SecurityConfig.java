@@ -25,17 +25,29 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomerUserDetailsService customerUserDetailsService;
+    private final JwtDecoderConfiguration jwtDecoderConfiguration;
 
-    @Bean
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception {
+//        httpSecurity.cors(Customizer.withDefaults())
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(auth -> auth.requestMatchers("/status","/health","/login","/activate","/register").permitAll()
+//                        .anyRequest().authenticated())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//
+//        return httpSecurity.build();
+//
+//    }
+        @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception {
-        httpSecurity.cors(Customizer.withDefaults())
+        httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/status","/health","/login","/activate","/register").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer((oauth2) ->oauth2
+                        .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoderConfiguration)));
         return httpSecurity.build();
-
     }
 
     @Bean

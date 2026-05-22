@@ -12,4 +12,9 @@ public class HomeController {
     public String healthCheck(){
         return "Application is running";
     }
+
+    @GetMapping("/test")
+    public String testSecurity(){
+        return "Security working";
+    }
 }

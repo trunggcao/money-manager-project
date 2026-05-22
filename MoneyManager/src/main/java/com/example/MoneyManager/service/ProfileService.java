@@ -24,6 +24,7 @@ public class ProfileService {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public ProfileDTO registerProfile(ProfileDTO profileDTO){
         ProfileEntity newProfile = toEntity(profileDTO);
@@ -107,8 +108,10 @@ public class ProfileService {
     public Map<String, Object> authenticateAndGenerateToke(AuthDTO authDTO) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getEmail(),authDTO.getPassword()));
+            //generate Token
+            String token = jwtService.generateAccessToken(authDTO);
             return  Map.of(
-                    "token","JWT token",
+                    "token",token,
                     "user", getPublicProfile(authDTO.getEmail())
             );
         } catch (Exception e) {
